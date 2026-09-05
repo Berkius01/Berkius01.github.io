@@ -1,0 +1,915 @@
+From ed0a712dc65948969d6212555b4044f5a6516206 Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Sat, 5 Sep 2026 22:14:25 +0000
+Subject: [PATCH] Align portfolio site with current CV
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Update experience, stack, production cases, education and contact
+details to match Berk Sağlıcak CV; remove claims not on the resume.
+---
+ index.html | 284 +++++++++++++++++++++++------
+ script.js  |  14 +-
+ style.css  | 515 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 746 insertions(+), 67 deletions(-)
+
+diff --git a/index.html b/index.html
+index 27cb8a4..5941d01 100644
+--- a/index.html
++++ b/index.html
+@@ -3,7 +3,7 @@
+ <head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+-  <meta name="description" content="Berk Sağlıcak — Computer Engineer building software, high-availability platforms and secure infrastructure.">
++  <meta name="description" content="Berk Sağlıcak — Bilgisayar Mühendisi. Sunucu, ağ, uygulama yönetimi ve savunma elektroniği / yazılım.">
+   <title>Berk Sağlıcak | Computer Engineer</title>
+   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+   <link rel="stylesheet" href="style.css">
+@@ -15,7 +15,12 @@
+     <nav class="nav container">
+       <a class="brand" href="#home" aria-label="Ana sayfa"><span>BS</span>.</a>
+       <div class="nav-links">
+-        <a href="#stack">Stack</a><a href="#experience">Experience</a><a href="#production">Production</a><a href="#code">Code</a><a href="#contact">Contact</a>
++        <a href="#stack">Stack</a>
++        <a href="#experience">Experience</a>
++        <a href="#production">Production</a>
++        <a href="#code">Code</a>
++        <a href="#defense">Defense</a>
++        <a href="#contact">Contact</a>
+       </div>
+       <a class="nav-github" href="https://github.com/Berkius01" target="_blank" rel="noopener">GitHub ↗</a>
+     </nav>
+@@ -23,102 +28,279 @@
+ 
+   <main>
+     <section class="hero container reveal" id="home">
+-      <div class="hero-copy">
+-        <div class="eyebrow">COMPUTER ENGINEER · SOFTWARE · SYSTEMS · DEFENSE</div>
++      <div>
++        <div class="eyebrow">COMPUTER ENGINEER · SYSTEMS · NETWORK · DEFENSE</div>
+         <h1>Building code.<br><span>Running systems.</span></h1>
+-        <p class="hero-text">Yazılım geliştirme, yüksek erişilebilir platformlar ve güvenli kurumsal altyapılar arasında çalışan Bilgisayar Mühendisi.</p>
++        <p class="hero-text">Sunucu, ağ ve uygulama yönetimi pratikleriyle çalışan Bilgisayar Mühendisi. Başkent Üniversitesi’nde Savunma Elektroniği ve Yazılımı yüksek lisansı yapıyor.</p>
+         <div class="hero-actions">
+           <a class="btn primary" href="#production">Production Work</a>
+-          <a class="btn ghost" href="#code">Code Evidence</a>
++          <a class="btn ghost" href="#contact">İletişim</a>
+         </div>
+       </div>
+       <aside class="signal-card">
+         <div class="signal-top"><span>ENGINEERING PROFILE</span><i></i></div>
+-        <div class="signal-row"><b>Focus</b><span>Software + Infrastructure</span></div>
+-        <div class="signal-row"><b>Domain</b><span>Defense / Telecom / Enterprise IT</span></div>
+-        <div class="signal-row"><b>Current</b><span>IT Engineer · ULAK Haberleşme</span></div>
+-        <div class="signal-row"><b>Graduate</b><span>Defense Electronics & Software MSc</span></div>
+-        <div class="signal-code">$ status --available-for-next-challenge<span class="cursor"></span></div>
++        <div class="signal-row"><b>Focus</b><span>IT Ops · Network · Infra</span></div>
++        <div class="signal-row"><b>Current</b><span>BT Mühendisi · Ulak Haberleşme</span></div>
++        <div class="signal-row"><b>Graduate</b><span>Savunma Elektroniği & Yazılımı MSc</span></div>
++        <div class="signal-row"><b>Based</b><span>Ankara, Türkiye</span></div>
++        <div class="signal-code">$ whoami → berk.sağlıcak<span class="cursor"></span></div>
+       </aside>
+     </section>
+ 
+     <section class="metrics container reveal" aria-label="Öne çıkan metrikler">
+-      <div><strong>3+</strong><span>years industry experience</span></div>
+-      <div><strong>70+</strong><span>virtual machines managed</span></div>
+-      <div><strong>3-node</strong><span>PostgreSQL HA architecture</span></div>
+-      <div><strong>44</strong><span>public GitHub repositories</span></div>
++      <div><strong>3+</strong><span>yıl sektör deneyimi</span></div>
++      <div><strong>3</strong><span>ofis ağı & firewall</span></div>
++      <div><strong>DC</strong><span>veri merkezi kurulumu</span></div>
++      <div><strong>5.</strong><span>CanSat dünya sıralaması</span></div>
+     </section>
+ 
+     <section class="section container reveal" id="stack">
+-      <div class="section-head"><div class="section-label">01 / TECHNOLOGY STACK</div><h2>Teknolojiler başrolde.<br><span>Projeler kanıtı.</span></h2></div>
++      <div class="section-head">
++        <div class="section-label">01 / TECHNOLOGY STACK</div>
++        <h2>CV’deki yığın.<br><span>İşin kanıtı.</span></h2>
++      </div>
+       <div class="stack-grid">
+-        <article class="stack-card"><div class="stack-no">01</div><h3>Software Engineering</h3><div class="chips"><span>Java</span><span>Spring Boot</span><span>C#</span><span>.NET</span><span>Python</span><span>Django</span><span>C/C++</span><span>MicroPython</span></div><p>Backend, desktop, embedded ve otomasyon tarafında farklı teknoloji yığınlarıyla uygulama geliştirme.</p><small>Evidence → Vacation Village · WebApi2 · Ground Station · Apziva · Embedded projects</small></article>
+-        <article class="stack-card"><div class="stack-no">02</div><h3>Platform & DevOps</h3><div class="chips"><span>Docker</span><span>Docker Compose</span><span>Linux</span><span>NGINX</span><span>Apache</span><span>IIS</span><span>Git</span><span>Bitbucket</span></div><p>Uygulamaların çalıştığı platformların kurulumu, containerization, web servisleri ve operasyonel yaşam döngüsü.</p><small>Evidence → Django Docker Demo · Enterprise application platforms</small></article>
+-        <article class="stack-card accent"><div class="stack-no">03</div><h3>Database & High Availability</h3><div class="chips"><span>PostgreSQL</span><span>Patroni</span><span>HAProxy</span><span>SQL Server</span></div><p>Legacy PostgreSQL ortamlarından yüksek erişilebilir mimariye geçiş, failover, migration, logging ve uygulama uyumluluğu.</p><small>Production → PostgreSQL 17 · 3-node Patroni · HAProxy</small></article>
+-        <article class="stack-card"><div class="stack-no">04</div><h3>Virtualization & Backup</h3><div class="chips"><span>Hyper-V</span><span>Proxmox</span><span>Veeam</span><span>RAID</span><span>Hardened Repo</span></div><p>VM yaşam döngüsü, kapasite, kurumsal yedekleme, repository mimarisi ve disaster recovery operasyonları.</p><small>Production → 70+ VMs · Enterprise backup infrastructure</small></article>
+-        <article class="stack-card"><div class="stack-no">05</div><h3>Network & Cyber Hygiene</h3><div class="chips"><span>FortiGate</span><span>Cisco</span><span>Aruba</span><span>VLAN</span><span>LACP</span><span>IPsec</span><span>SSL VPN</span><span>WireGuard</span></div><p>Segmentasyon, erişim politikaları, izole test ağları, switching ve güvenli uzak erişim tasarımları.</p><small>Production → Office segmentation · Firewall/VPN · Data center networking</small></article>
+-        <article class="stack-card"><div class="stack-no">06</div><h3>Monitoring & Microsoft Enterprise</h3><div class="chips"><span>Zabbix</span><span>PowerShell</span><span>AD</span><span>SCCM</span><span>WSUS</span><span>SharePoint</span><span>Windows Server</span></div><p>Monitoring otomasyonları, endpoint yönetimi, kurumsal Microsoft servisleri ve SharePoint farm operasyonları.</p><small>Production → Zabbix × Veeam · SharePoint SE migration</small></article>
++        <article class="stack-card">
++          <div class="stack-no">01</div>
++          <h3>Sistem & Sunucu</h3>
++          <div class="chips"><span>Windows Server</span><span>Linux</span><span>Hyper-V</span><span>VEEAM</span><span>RAID</span></div>
++          <p>Veri merkezi sunucu yönetimi, sanallaştırma, yedekleme ve disk altyapısı.</p>
++          <small>Production → Ulak DC · Hyper-V · VEEAM</small>
++        </article>
++        <article class="stack-card">
++          <div class="stack-no">02</div>
++          <h3>Ağ & Güvenlik</h3>
++          <div class="chips"><span>Firewall</span><span>WireGuard</span><span>SSL VPN</span><span>IPsec</span><span>LACP</span><span>Switch</span></div>
++          <p>Çok ofisli firewall, VPN, MAC filtreleme, switch/AP kurulumu ve segmentasyon.</p>
++          <small>Production → 3 ofis · Cisco / Aruba / Ruijie</small>
++        </article>
++        <article class="stack-card accent">
++          <div class="stack-no">03</div>
++          <h3>Microsoft Enterprise</h3>
++          <div class="chips"><span>Active Directory</span><span>WSUS</span><span>SCCM</span><span>IIS</span></div>
++          <p>Kimlik, güncelleme ve uç nokta yönetimi; Windows uygulama servisleri.</p>
++          <small>Production → AD · WSUS · SCCM</small>
++        </article>
++        <article class="stack-card">
++          <div class="stack-no">04</div>
++          <h3>Uygulama & Platform</h3>
++          <div class="chips"><span>Apache2</span><span>NGINX</span><span>Postgres</span><span>MS SQL</span><span>Atlassian</span></div>
++          <p>Linux/Windows uygulama yönetimi, açık kaynak entegrasyonları, Jira / Confluence / Bitbucket.</p>
++          <small>Evidence → Ulak platform operasyonları</small>
++        </article>
++        <article class="stack-card">
++          <div class="stack-no">05</div>
++          <h3>Yazılım</h3>
++          <div class="chips"><span>C/C++</span><span>Spring Boot</span><span>.NET</span><span>Python</span><span>Git</span></div>
++          <p>Backend ve gömülü tarafta uygulama geliştirme; yer istasyonu ve uçuş yazılımı deneyimi.</p>
++          <small>Evidence → GitHub · PARSYSat · Ground Station</small>
++        </article>
++        <article class="stack-card">
++          <div class="stack-no">06</div>
++          <h3>Savunma Standartları</h3>
++          <div class="chips"><span>MIL-STD-1553</span><span>ARINC 429</span><span>MIL-STD-810</span><span>DO-160</span><span>Seri</span></div>
++          <p>Yüksek lisans ve model uydu çalışmalarında haberleşme / çevresel test standartları.</p>
++          <small>Focus → Savunma Elektroniği & Yazılımı MSc</small>
++        </article>
+       </div>
+     </section>
+ 
+     <section class="section container reveal" id="experience">
+       <div class="section-label">02 / EXPERIENCE</div>
+       <div class="experience-layout">
+-        <div class="experience-title"><h2>Görev tanımı değil.<br><span>Gerçek operasyon.</span></h2><p>Production sistemlerde problem çözme, migration, yüksek erişilebilirlik ve otomasyon odaklı çalışma.</p></div>
++        <div class="experience-title">
++          <h2>Görev tanımı değil.<br><span>Gerçek operasyon.</span></h2>
++          <p>Ulak Haberleşme’de veri merkezi, yedekleme, ağ ve Microsoft altyapısı odaklı çalışma.</p>
++        </div>
+         <div class="experience-body">
+-          <article class="role"><div class="role-meta"><span>2024 — Present</span><b>ULAK Haberleşme</b></div><h3>Bilgi Teknolojileri Mühendisi</h3>
++          <article class="role">
++            <div class="role-meta"><span>Oca 2024 — Günümüz</span><b>Ulak Haberleşme</b></div>
++            <h3>Bilgi Teknolojileri Mühendisi</h3>
+             <ul>
+-              <li>PostgreSQL 11 tabanlı legacy uygulama veritabanlarının PostgreSQL 17 ortamına taşınması; Patroni + HAProxy ile 3 node yüksek erişilebilirlik mimarisinin kurulumu ve sorun giderme.</li>
+-              <li>Hyper-V ve Proxmox üzerinde 70+ sanal makinenin yönetimi; VM migration, kapasite, ağ bağlantıları ve altyapı operasyonları.</li>
+-              <li>Veeam Backup & Replication ile kurumsal yedekleme altyapısı, hardened Linux repository, backup copy ve recovery senaryolarının işletilmesi.</li>
+-              <li>FortiGate, Cisco ve Aruba ekosisteminde VLAN segmentasyonu, VPN, firewall politikaları, LACP ve izole test ağı tasarımları.</li>
+-              <li>SharePoint 2019 → Subscription Edition geçişi, content database restore/mount, SQL entegrasyonu ve çok node farm çalışmalarına katkı.</li>
+-              <li>Zabbix + PowerShell ile Veeam job discovery/monitoring otomasyonu; operasyonel görünürlük ve günlük kontrollerin otomatikleştirilmesi.</li>
++              <li>Veri merkezinde sunucu yönetimi: yedekleme, bakım, ağ yapılandırması, sanal makine yönetimi ve sorun giderme.</li>
++              <li>Üç ofiste firewall üzerinde MAC filtreleme, arayüz yapılandırması ve VPN (WireGuard, SSL VPN, IPsec) yönetimi.</li>
++              <li>Öncelikle Linux ve Windows ortamlarda uygulama yönetimi.</li>
++              <li>Ofis ihtiyaçlarına göre switch yapılandırma ve yönetimi.</li>
++              <li>Active Directory, WSUS ve SCCM yönetimi.</li>
+             </ul>
+           </article>
+-          <article class="role compact"><div class="role-meta"><span>2022 — 2023</span><b>ULAK Haberleşme</b></div><h3>Aday Mühendis</h3><p>Jira, Confluence ve Bitbucket yönetimi; açık kaynak uygulama entegrasyonları; sanal makine ve kullanıcı operasyonları.</p></article>
++          <article class="role compact">
++            <div class="role-meta"><span>Eki 2022 — Ara 2023</span><b>Ulak Haberleşme</b></div>
++            <h3>Aday Mühendis</h3>
++            <p>Atlassian ortamları, son kullanıcı desteği, kullanıcı yedekleri, açık kaynak uygulama entegrasyonu ve sanal makine yönetimi.</p>
++          </article>
++          <article class="role compact">
++            <div class="role-meta"><span>Tem — Ağu 2022</span><b>Ulak Haberleşme · Stajyer</b></div>
++            <h3>Stajyer</h3>
++            <p>Postfix + Dovecot posta sunucusu; MicroStack / DevStack ile OpenStack; Wireshark ile paket analizi.</p>
++          </article>
++          <article class="role compact">
++            <div class="role-meta"><span>Tem — Ağu 2021</span><b>SGK · Stajyer</b></div>
++            <h3>Stajyer</h3>
++            <p>Python netmiko ile ağ cihaz yönetimi; GNS3 üzerinde switch/router topoloji tasarımı.</p>
++          </article>
++        </div>
++      </div>
++    </section>
++
++    <section class="section container reveal" id="education">
++      <div class="section-label">03 / EDUCATION</div>
++      <div class="experience-layout">
++        <div class="experience-title">
++          <h2>Akademik<br><span>çizgi.</span></h2>
++        </div>
++        <div class="experience-body">
++          <article class="role compact">
++            <div class="role-meta"><span>Şub 2025 — …</span><b>Başkent Üniversitesi</b></div>
++            <h3>Yüksek Lisans · Savunma Elektroniği ve Yazılımı</h3>
++          </article>
++          <article class="role compact">
++            <div class="role-meta"><span>Eyl 2018 — Haz 2023</span><b>Başkent Üniversitesi</b></div>
++            <h3>Lisans · Bilgisayar Mühendisliği</h3>
++          </article>
++          <article class="role compact">
++            <div class="role-meta"><span>Sınavlar</span><b>YÖKDİL 72.5 · ALES 73.3</b></div>
++            <h3>Sertifika & Sınavlar</h3>
++          </article>
+         </div>
+       </div>
+     </section>
+ 
+     <section class="section container reveal" id="production">
+-      <div class="section-head"><div class="section-label">03 / PRODUCTION ENGINEERING</div><h2>Production’da dokunduğum<br><span>sistemler.</span></h2></div>
++      <div class="section-head">
++        <div class="section-label">04 / PRODUCTION ENGINEERING</div>
++        <h2>Production’da dokunduğum<br><span>işler.</span></h2>
++      </div>
+       <div class="case-grid">
+-        <article class="case-card feature"><div class="case-kicker">DATABASE / HIGH AVAILABILITY</div><h3>PostgreSQL Patroni HA</h3><p class="case-problem">Problem → Legacy veritabanı altyapısında sürüm, erişilebilirlik ve uygulama uyumluluğu ihtiyacı.</p><p>PostgreSQL 17, Patroni ve HAProxy ile üç node mimari; migration, timezone/locale, permission, view/operator uyumluluğu ve log izleme çalışmaları.</p><div class="chips"><span>PostgreSQL 17</span><span>Patroni</span><span>HAProxy</span><span>Linux</span></div></article>
+-        <article class="case-card"><div class="case-kicker">SECURITY / NETWORK</div><h3>Cyber Hygiene & Segmentation</h3><p class="case-problem">Problem → Ofis, test ve sunucu ağlarında erişim yüzeyini küçültme ve segmentasyon ihtiyacı.</p><p>VLAN, firewall interface/policy, VPN ve izole network tasarımları; Cisco/Aruba switching ve LACP entegrasyonları.</p><div class="chips"><span>FortiGate</span><span>VLAN</span><span>VPN</span><span>LACP</span></div></article>
+-        <article class="case-card"><div class="case-kicker">BACKUP / DR</div><h3>Enterprise Backup Platform</h3><p class="case-problem">Problem → Farklı sanallaştırma ve servis iş yükleri için merkezi, dayanıklı yedekleme ihtiyacı.</p><p>Veeam B&R, RAID tabanlı repository, hardened Linux repo, Hyper-V/Proxmox ve kurumsal workload koruma süreçleri.</p><div class="chips"><span>Veeam</span><span>Hardened Repo</span><span>Hyper-V</span><span>Proxmox</span></div></article>
+-        <article class="case-card"><div class="case-kicker">AUTOMATION / MONITORING</div><h3>Zabbix × Veeam Automation</h3><p class="case-problem">Problem → Backup job durumlarını tek tek kontrol etmek yerine merkezi görünürlük ihtiyacı.</p><p>PowerShell discovery scriptleri, job name normalization, Zabbix item discovery ve zamanlanmış veri toplama akışı.</p><div class="chips"><span>Zabbix</span><span>PowerShell</span><span>Veeam</span><span>Automation</span></div></article>
+-        <article class="case-card"><div class="case-kicker">MICROSOFT / MIGRATION</div><h3>SharePoint SE Migration</h3><p class="case-problem">Problem → SharePoint 2019 farmının daha güncel Subscription Edition mimarisine geçirilmesi.</p><p>İki node SharePoint farm, SQL content DB restore/mount, servis ve dil paketi uyumluluğu, farm troubleshooting.</p><div class="chips"><span>SharePoint SE</span><span>SQL Server</span><span>PowerShell</span><span>Windows Server</span></div></article>
+-        <article class="case-card"><div class="case-kicker">DATA CENTER / INFRASTRUCTURE</div><h3>Virtualization & Data Center</h3><p class="case-problem">Problem → Farklı üretim/test iş yükleri için esnek sanallaştırma ve fiziksel ağ altyapısı.</p><p>Hyper-V/Proxmox, fiber uplinkler, Linux bridges, VLAN yapıları, fiziksel sunucu kurulumları ve servis devreye alma.</p><div class="chips"><span>Hyper-V</span><span>Proxmox</span><span>Fiber</span><span>Linux</span></div></article>
++        <article class="case-card feature">
++          <div class="case-kicker">BACKUP / DR</div>
++          <h3>Yedekleme Altyapısı</h3>
++          <p class="case-problem">Problem → Disk sağlığı ve kurumsal yedeklerin güvenli depolanması.</p>
++          <p>RAID yapılandırmaları; yedekleme yazılımı için sanallaştırma, cihaz ve ağ altyapısının kurulması (VEEAM odaklı).</p>
++          <div class="chips"><span>VEEAM</span><span>RAID</span><span>Hyper-V</span><span>Storage</span></div>
++        </article>
++        <article class="case-card">
++          <div class="case-kicker">NETWORK</div>
++          <h3>Ağ Altyapısı</h3>
++          <p class="case-problem">Problem → Yeni ofis için uçtan uca erişim ve izolasyon.</p>
++          <p>Firewall, switch ve access point yerleşimi; izole arayüzler; L2 dağıtım; LACP ile yüksek hızlı test bağlantıları ve alt ağ sınırlama.</p>
++          <div class="chips"><span>Firewall</span><span>Switch</span><span>AP</span><span>LACP</span></div>
++        </article>
++        <article class="case-card">
++          <div class="case-kicker">DATA CENTER</div>
++          <h3>Veri Merkezi</h3>
++          <p class="case-problem">Problem → HAB için fiziksel sunucu ve servislerin devreye alınması.</p>
++          <p>Sunucu donanım kurulumu, fiber bağlantılar, adresleme; işletim sistemleri ve servislerin hazır hale getirilmesi.</p>
++          <div class="chips"><span>Servers</span><span>Fiber</span><span>Linux</span><span>Windows</span></div>
++        </article>
++        <article class="case-card">
++          <div class="case-kicker">IDENTITY / ENDPOINT</div>
++          <h3>AD · WSUS · SCCM</h3>
++          <p class="case-problem">Problem → Kimlik, güncelleme ve uç nokta yönetiminin kurumsal ölçekte işletilmesi.</p>
++          <p>Active Directory, WSUS ve SCCM ile kullanıcı / güncelleme / dağıtım operasyonları.</p>
++          <div class="chips"><span>Active Directory</span><span>WSUS</span><span>SCCM</span></div>
++        </article>
++        <article class="case-card">
++          <div class="case-kicker">SECURE ACCESS</div>
++          <h3>VPN & Firewall Ops</h3>
++          <p class="case-problem">Problem → Üç ofiste güvenli uzak erişim ve kontrollü erişim yüzeyi.</p>
++          <p>WireGuard, SSL VPN ve IPsec; MAC filtreleme ve arayüz yapılandırmaları.</p>
++          <div class="chips"><span>WireGuard</span><span>SSL VPN</span><span>IPsec</span><span>MAC Filter</span></div>
++        </article>
++        <article class="case-card">
++          <div class="case-kicker">CLOUD / LAB</div>
++          <h3>OpenStack & Mail Lab</h3>
++          <p class="case-problem">Problem → Staj döneminde bulut ve posta altyapısı pratiği.</p>
++          <p>MicroStack / DevStack ile OpenStack; Postfix + Dovecot; Wireshark ile paket analizi.</p>
++          <div class="chips"><span>OpenStack</span><span>Postfix</span><span>Wireshark</span></div>
++        </article>
+       </div>
+     </section>
+ 
+     <section class="section container reveal" id="code">
+-      <div class="section-head code-head"><div><div class="section-label">04 / CODE EVIDENCE</div><h2>Teknoloji iddiasının<br><span>arkasında kod var.</span></h2></div><p>GitHub projeleri burada “proje sayısı” göstermek için değil; Java, C#, Python, Docker ve Embedded tarafındaki gerçek kod deneyimini kanıtlamak için seçildi.</p></div>
++      <div class="section-head code-head">
++        <div>
++          <div class="section-label">05 / CODE EVIDENCE</div>
++          <h2>Teknoloji iddiasının<br><span>arkasında kod var.</span></h2>
++        </div>
++        <p>Seçili GitHub çalışmaları: Java, C#, Python/Docker ve embedded networking.</p>
++      </div>
+       <div class="repo-grid">
+-        <a class="repo-card" href="https://github.com/Berkius01/Vacation-Vilage-hw" target="_blank" rel="noopener"><div class="repo-meta"><span>JAVA / OOP</span><i>↗</i></div><h3>Vacation Village Management</h3><p>Java tabanlı tatil köyü yönetim sistemi; nesne yönelimli tasarım ve uygulama modelleme pratiği.</p><div class="chips"><span>Java</span><span>OOP</span></div></a>
+-        <a class="repo-card" href="https://github.com/Berkius01/WebApi2" target="_blank" rel="noopener"><div class="repo-meta"><span>C# / .NET</span><i>↗</i></div><h3>Department & Employee API</h3><p>Departman ve çalışan yönetimi için .NET Web API egzersizi; backend endpoint ve veri modeli çalışması.</p><div class="chips"><span>C#</span><span>.NET</span><span>REST API</span></div></a>
+-        <a class="repo-card" href="https://github.com/Berkius01/zedGraphDeneme1" target="_blank" rel="noopener"><div class="repo-meta"><span>C# / SPACE</span><i>↗</i></div><h3>Model Satellite Ground Station</h3><p>Model uydu için C# tabanlı ground station control panel; masaüstü arayüz ve telemetri odaklı çalışma.</p><div class="chips"><span>C#</span><span>WinForms</span><span>Telemetry</span></div></a>
+-        <a class="repo-card" href="https://github.com/Berkius01/apziva_docker_demo" target="_blank" rel="noopener"><div class="repo-meta"><span>PYTHON / DOCKER</span><i>↗</i></div><h3>Django Containerization Demo</h3><p>Django uygulamasını Dockerfile ve Docker Compose ile container ortamına taşıyan örnek.</p><div class="chips"><span>Python</span><span>Django</span><span>Docker</span></div></a>
+-        <a class="repo-card" href="https://github.com/Berkius01/bil429-arduino" target="_blank" rel="noopener"><div class="repo-meta"><span>C++ / EMBEDDED</span><i>↗</i></div><h3>ESP8266 Network Client</h3><p>ESP8266/Arduino ve TP-Link CPE210 ile ağ bağlantısı kuran embedded networking çalışması.</p><div class="chips"><span>C++</span><span>ESP8266</span><span>Networking</span></div></a>
+-        <a class="repo-card" href="https://github.com/Berkius01/innova2" target="_blank" rel="noopener"><div class="repo-meta"><span>JAVA / MAVEN</span><i>↗</i></div><h3>Java Application Work</h3><p>Maven proje yapısında Java uygulama geliştirme çalışması; backend ekosistemine ait kod örneklerinden biri.</p><div class="chips"><span>Java</span><span>Maven</span></div></a>
++        <a class="repo-card" href="https://github.com/Berkius01/Vacation-Vilage-hw" target="_blank" rel="noopener">
++          <div class="repo-meta"><span>JAVA / OOP</span><i>↗</i></div>
++          <h3>Vacation Village Management</h3>
++          <p>Java tabanlı tatil köyü yönetim sistemi; nesne yönelimli tasarım pratiği.</p>
++          <div class="chips"><span>Java</span><span>OOP</span></div>
++        </a>
++        <a class="repo-card" href="https://github.com/Berkius01/WebApi2" target="_blank" rel="noopener">
++          <div class="repo-meta"><span>C# / .NET</span><i>↗</i></div>
++          <h3>Department & Employee API</h3>
++          <p>.NET Web API ile departman/çalışan backend egzersizi.</p>
++          <div class="chips"><span>C#</span><span>.NET</span><span>REST</span></div>
++        </a>
++        <a class="repo-card" href="https://github.com/Berkius01/zedGraphDeneme1" target="_blank" rel="noopener">
++          <div class="repo-meta"><span>C# / SPACE</span><i>↗</i></div>
++          <h3>Model Satellite Ground Station</h3>
++          <p>Model uydu için C# yer istasyonu kontrol paneli.</p>
++          <div class="chips"><span>C#</span><span>WinForms</span><span>Telemetry</span></div>
++        </a>
++        <a class="repo-card" href="https://github.com/Berkius01/apziva_docker_demo" target="_blank" rel="noopener">
++          <div class="repo-meta"><span>PYTHON / DOCKER</span><i>↗</i></div>
++          <h3>Django Containerization</h3>
++          <p>Django uygulamasını Docker / Compose ile taşıma örneği.</p>
++          <div class="chips"><span>Python</span><span>Django</span><span>Docker</span></div>
++        </a>
++        <a class="repo-card" href="https://github.com/Berkius01/bil429-arduino" target="_blank" rel="noopener">
++          <div class="repo-meta"><span>C++ / EMBEDDED</span><i>↗</i></div>
++          <h3>ESP8266 Network Client</h3>
++          <p>ESP8266 ve CPE210 ile embedded networking çalışması.</p>
++          <div class="chips"><span>C++</span><span>ESP8266</span></div>
++        </a>
++        <a class="repo-card" href="https://github.com/Berkius01/innova2" target="_blank" rel="noopener">
++          <div class="repo-meta"><span>JAVA / MAVEN</span><i>↗</i></div>
++          <h3>Java Application Work</h3>
++          <p>Maven yapısında Java uygulama geliştirme örneği.</p>
++          <div class="chips"><span>Java</span><span>Maven</span></div>
++        </a>
+       </div>
+-      <a class="all-repos" href="https://github.com/Berkius01?tab=repositories" target="_blank" rel="noopener">View all 44 public repositories ↗</a>
++      <a class="all-repos" href="https://github.com/Berkius01?tab=repositories" target="_blank" rel="noopener">Tüm public repolara bak ↗</a>
+     </section>
+ 
+     <section class="section container reveal" id="defense">
+-      <div class="section-label">05 / DEFENSE & SPACE</div>
++      <div class="section-label">06 / DEFENSE & SPACE</div>
+       <div class="defense-grid">
+-        <div><h2>Embedded geçmişi<br><span>hala masada.</span></h2><p>Yüksek lisans odağı Savunma Elektroniği ve Yazılımı; proje geçmişinde model uydu, uçuş yazılımı, ground station ve haberleşme standartları bulunuyor.</p></div>
+-        <div class="defense-list"><div><b>Model Satellite</b><span>RP2040 · MicroPython · C/C++ · C# Ground Station</span></div><div><b>10K COTS</b><span>Raspberry Pi 4 · Python · Flight Board · Ground Station</span></div><div><b>Engineering Standards</b><span>MIL-STD-1553 · ARINC 429 · MIL-STD-810 · DO-160</span></div><div><b>CanSat</b><span>World 5th · Simulation World 4th</span></div></div>
++        <div>
++          <h2>Embedded geçmiş<br><span>masada duruyor.</span></h2>
++          <p>PARSYSat yazılım takım liderliği; model uydu uçuş yazılımı, yer istasyonu ve CanSat başarıları.</p>
++        </div>
++        <div class="defense-list">
++          <div><b>Model Uydu</b><span>RP2040 · MicroPython · C/C++ · C# Yer İstasyonu · Yazılım TL</span></div>
++          <div><b>10K COTS</b><span>Raspberry Pi 4 · Python bakteri büyüme modeli · Uçuş kartı · Yazılım TL</span></div>
++          <div><b>Standartlar</b><span>MIL-STD-1553 · ARINC 429 · MIL-STD-810 · DO-160</span></div>
++          <div><b>CanSat</b><span>Dünya 5. · Simülasyon Dünya 4.</span></div>
++        </div>
+       </div>
+     </section>
+ 
+     <section class="section contact container reveal" id="contact">
+-      <div class="contact-box"><div><div class="eyebrow dark">OPEN TO SOFTWARE · SYSTEMS · PLATFORM · DEFENSE</div><h2>Bir sonraki<br>problemi konuşalım.</h2></div><div class="contact-links"><a href="mailto:berk.saglicak@outlook.com">berk.saglicak@outlook.com ↗</a><a href="https://github.com/Berkius01" target="_blank" rel="noopener">github.com/Berkius01 ↗</a><span>Ankara, Türkiye</span></div></div>
++      <div class="contact-box">
++        <div>
++          <div class="eyebrow dark">OPEN TO SYSTEMS · NETWORK · PLATFORM · DEFENSE</div>
++          <h2>Bir sonraki<br>problemi konuşalım.</h2>
++        </div>
++        <div class="contact-links">
++          <a href="mailto:berk.saglicak@outlook.com">berk.saglicak@outlook.com ↗</a>
++          <a href="tel:+905336348183">+90 (533) 634 8183 ↗</a>
++          <a href="https://github.com/Berkius01" target="_blank" rel="noopener">github.com/Berkius01 ↗</a>
++          <span>Ankara, Türkiye</span>
++        </div>
++      </div>
+     </section>
+   </main>
+ 
+-  <footer class="container"><span>© 2026 Berk Sağlıcak</span><span>Computer Engineer · Software · Systems · Defense</span></footer>
++  <footer class="container">
++    <span>© 2026 Berk Sağlıcak</span>
++    <span>Computer Engineer · Systems · Network · Defense</span>
++  </footer>
+ </body>
+ </html>
+diff --git a/script.js b/script.js
+index 1b1ce5e..cbe7a56 100644
+--- a/script.js
++++ b/script.js
+@@ -1 +1,13 @@
+-const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
++const observer = new IntersectionObserver(
++  (entries) => {
++    entries.forEach((entry) => {
++      if (entry.isIntersecting) {
++        entry.target.classList.add("visible");
++        observer.unobserve(entry.target);
++      }
++    });
++  },
++  { threshold: 0.08 }
++);
++
++document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+diff --git a/style.css b/style.css
+index f53f7af..925beab 100644
+--- a/style.css
++++ b/style.css
+@@ -1,16 +1,501 @@
++:root {
++  --bg: #090b0e;
++  --panel: #101419;
++  --panel2: #141a20;
++  --text: #f4f7fa;
++  --muted: #98a4af;
++  --line: #252d35;
++  --accent: #9cff57;
++  --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
++}
+ 
+-:root{--bg:#090b0e;--panel:#101419;--panel2:#141a20;--text:#f4f7fa;--muted:#98a4af;--line:#252d35;--accent:#9cff57;--accent-soft:#d9ffc0;--shadow:0 24px 70px rgba(0,0,0,.28)}
+-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.6;overflow-x:hidden}a{color:inherit;text-decoration:none}.container{width:min(1180px,calc(100% - 40px));margin:0 auto}.grid-bg{position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 72%)}
+-.nav-wrap{position:sticky;top:0;z-index:50;background:rgba(9,11,14,.82);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:30px}.brand{font-weight:900;font-size:24px;letter-spacing:-.05em}.brand span{color:var(--accent)}.nav-links{display:flex;gap:24px}.nav-links a,.nav-github{font-size:12px;color:var(--muted);transition:.2s}.nav-links a:hover,.nav-github:hover{color:var(--accent)}
+-.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1.2fr .8fr;gap:70px;align-items:center;padding:80px 0}.eyebrow,.section-label{font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.13em;color:var(--accent)}.eyebrow.dark{color:#29451b}.hero h1{font-size:clamp(58px,8vw,108px);line-height:.88;letter-spacing:-.065em;margin:20px 0 30px}.hero h1 span,h2 span{color:transparent;-webkit-text-stroke:1px #66717c}.hero-text{font-size:20px;color:#c3cbd3;max-width:760px;margin:0}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}.btn{padding:13px 18px;border:1px solid var(--line);font-size:13px;font-weight:800}.btn.primary{background:var(--accent);color:#071006;border-color:var(--accent)}.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+-.signal-card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);box-shadow:var(--shadow);padding:24px}.signal-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--line);font:700 10px monospace;color:var(--muted)}.signal-top i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 20px var(--accent)}.signal-row{display:grid;grid-template-columns:100px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line);font-size:13px}.signal-row b{color:var(--accent);font:700 11px monospace}.signal-row span{color:#c6ced6}.signal-code{margin-top:22px;padding:14px;background:#090c0f;border:1px solid #202830;color:#aeb8c2;font:600 11px monospace}.cursor{display:inline-block;width:7px;height:14px;background:var(--accent);margin-left:6px;vertical-align:-2px;animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+-.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:rgba(17,21,26,.65);margin-bottom:100px}.metrics div{padding:26px;border-right:1px solid var(--line)}.metrics div:last-child{border-right:0}.metrics strong{display:block;font-size:34px;letter-spacing:-.04em;color:var(--accent)}.metrics span{font-size:12px;color:var(--muted)}
+-.section{padding:105px 0;border-top:1px solid var(--line)}.section-head{margin-bottom:52px}.section-label{margin-bottom:22px}h2{font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-.055em;margin:0}.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.stack-card{min-height:320px;padding:30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(255,255,255,.012),transparent);transition:.2s}.stack-card:hover{background:#11161b;transform:translateY(-2px)}.stack-card.accent{background:linear-gradient(135deg,#172315,#101419)}.stack-no{font:700 11px monospace;color:var(--accent)}.stack-card h3{font-size:28px;line-height:1.05;letter-spacing:-.035em;margin:36px 0 20px}.stack-card p{font-size:14px;color:#aeb8c2;margin:18px 0 24px}.stack-card small{margin-top:auto;font:700 10px/1.5 monospace;color:var(--accent)}.chips{display:flex;flex-wrap:wrap;gap:7px}.chips span{font:700 10px monospace;padding:6px 9px;border:1px solid #303943;color:#d3dbe2;background:rgba(255,255,255,.01)}
+-.experience-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:90px}.experience-title p{color:var(--muted);font-size:16px;max-width:420px}.role{padding:0 0 42px;margin-bottom:38px;border-bottom:1px solid var(--line)}.role-meta{display:flex;justify-content:space-between;gap:20px;font:700 11px monospace;color:var(--muted)}.role-meta b{color:var(--accent)}.role h3{font-size:28px;margin:18px 0}.role ul{margin:0;padding-left:20px;color:#b4bec7}.role li{margin:10px 0}.role.compact p{color:#aeb8c2;margin:0}
+-.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.case-card{min-height:365px;background:var(--panel);border:1px solid var(--line);padding:28px;display:flex;flex-direction:column}.case-card.feature{background:linear-gradient(135deg,#172315,#101419);border-color:#35472c}.case-kicker{font:700 10px monospace;color:var(--accent);letter-spacing:.08em}.case-card h3{font-size:32px;line-height:1.05;letter-spacing:-.04em;margin:64px 0 14px}.case-card p{font-size:14px;color:#aeb8c2;margin:0 0 16px}.case-card .case-problem{color:#d7dee4}.case-card .chips{margin-top:auto;padding-top:20px}
+-.code-head{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:end}.code-head>p{color:var(--muted);font-size:16px;margin:0 0 8px}.repo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.repo-card{min-height:315px;padding:24px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;transition:.22s}.repo-card:hover{transform:translateY(-4px);border-color:#44523b;background:#121813}.repo-meta{display:flex;justify-content:space-between;font:700 10px monospace;color:var(--accent)}.repo-meta i{font-style:normal;color:#dbe2e8}.repo-card h3{font-size:24px;line-height:1.08;letter-spacing:-.035em;margin:52px 0 12px}.repo-card p{font-size:14px;color:var(--muted);margin:0 0 20px}.repo-card .chips{margin-top:auto}.all-repos{display:inline-block;margin-top:28px;color:var(--accent);font-weight:800;border-bottom:1px solid rgba(156,255,87,.35)}
+-.defense-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}.defense-grid>div:first-child p{font-size:16px;color:var(--muted);max-width:520px}.defense-list{border-top:1px solid var(--line)}.defense-list div{padding:22px 0;border-bottom:1px solid var(--line)}.defense-list b{display:block;font-size:18px;margin-bottom:5px}.defense-list span{font:600 11px monospace;color:var(--muted)}
+-.contact-box{padding:54px;background:var(--accent);color:#071006;display:grid;grid-template-columns:1.35fr .65fr;gap:50px;align-items:end}.contact-box h2{margin-top:20px}.contact-links{display:flex;flex-direction:column;gap:12px;align-items:flex-start}.contact-links a{font-weight:900;border-bottom:1px solid rgba(0,0,0,.25)}.contact-links span{color:#29421f}footer{min-height:110px;display:flex;justify-content:space-between;align-items:center;font:600 11px monospace;color:#68747e}
+-.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}.reveal.visible{opacity:1;transform:none}
+-@media(max-width:980px){.nav-links{display:none}.hero{grid-template-columns:1fr;min-height:auto}.signal-card{max-width:680px}.metrics{grid-template-columns:repeat(2,1fr)}.metrics div:nth-child(2){border-right:0}.metrics div:nth-child(-n+2){border-bottom:1px solid var(--line)}.experience-layout,.code-head,.defense-grid{grid-template-columns:1fr;gap:40px}.repo-grid{grid-template-columns:repeat(2,1fr)}}
+-@media(max-width:700px){.container{width:min(100% - 26px,1180px)}.hero{padding:60px 0}.hero h1{font-size:56px}.hero-text{font-size:17px}.metrics{grid-template-columns:1fr}.metrics div{border-right:0!important;border-bottom:1px solid var(--line)}.metrics div:last-child{border-bottom:0}.stack-grid,.case-grid,.repo-grid{grid-template-columns:1fr}.section{padding:76px 0}.contact-box{grid-template-columns:1fr;padding:30px}.nav-github{display:none}footer{flex-direction:column;justify-content:center;align-items:flex-start;gap:6px}}
++* { box-sizing: border-box; }
++html { scroll-behavior: smooth; }
++body {
++  margin: 0;
++  background: var(--bg);
++  color: var(--text);
++  font-family: Inter, Arial, Helvetica, sans-serif;
++  line-height: 1.6;
++  overflow-x: hidden;
++}
++a { color: inherit; text-decoration: none; }
++.container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
++
++.grid-bg {
++  position: fixed;
++  inset: 0;
++  pointer-events: none;
++  opacity: 0.16;
++  background-image:
++    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
++    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
++  background-size: 44px 44px;
++  mask-image: linear-gradient(to bottom, black, transparent 72%);
++}
++
++.nav-wrap {
++  position: sticky;
++  top: 0;
++  z-index: 50;
++  background: rgba(9, 11, 14, 0.82);
++  backdrop-filter: blur(16px);
++  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
++}
++.nav {
++  height: 72px;
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  gap: 30px;
++}
++.brand { font-weight: 900; font-size: 24px; letter-spacing: -0.05em; }
++.brand span { color: var(--accent); }
++.nav-links { display: flex; gap: 24px; }
++.nav-links a,
++.nav-github {
++  font-size: 12px;
++  color: var(--muted);
++  transition: 0.2s;
++}
++.nav-links a:hover,
++.nav-github:hover { color: var(--accent); }
++
++.hero {
++  min-height: calc(100vh - 72px);
++  display: grid;
++  grid-template-columns: 1.2fr 0.8fr;
++  gap: 70px;
++  align-items: center;
++  padding: 80px 0;
++}
++.eyebrow,
++.section-label {
++  font: 700 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
++  letter-spacing: 0.13em;
++  color: var(--accent);
++}
++.eyebrow.dark { color: #29451b; }
++.hero h1 {
++  font-size: clamp(52px, 7.5vw, 96px);
++  line-height: 0.9;
++  letter-spacing: -0.065em;
++  margin: 20px 0 28px;
++}
++.hero h1 span,
++h2 span {
++  color: transparent;
++  -webkit-text-stroke: 1px #66717c;
++}
++.hero-text {
++  font-size: 19px;
++  color: #c3cbd3;
++  max-width: 720px;
++  margin: 0;
++}
++.hero-actions {
++  display: flex;
++  gap: 10px;
++  flex-wrap: wrap;
++  margin-top: 32px;
++}
++.btn {
++  padding: 13px 18px;
++  border: 1px solid var(--line);
++  font-size: 13px;
++  font-weight: 800;
++}
++.btn.primary {
++  background: var(--accent);
++  color: #071006;
++  border-color: var(--accent);
++}
++.btn.ghost {
++  background: transparent;
++  color: var(--text);
++}
++.btn.ghost:hover {
++  border-color: var(--accent);
++  color: var(--accent);
++}
++
++.signal-card {
++  background: linear-gradient(180deg, var(--panel2), var(--panel));
++  border: 1px solid var(--line);
++  box-shadow: var(--shadow);
++  padding: 24px;
++}
++.signal-top {
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  padding-bottom: 18px;
++  border-bottom: 1px solid var(--line);
++  font: 700 10px monospace;
++  color: var(--muted);
++}
++.signal-top i {
++  width: 8px;
++  height: 8px;
++  border-radius: 50%;
++  background: var(--accent);
++  box-shadow: 0 0 20px var(--accent);
++}
++.signal-row {
++  display: grid;
++  grid-template-columns: 100px 1fr;
++  gap: 20px;
++  padding: 16px 0;
++  border-bottom: 1px solid var(--line);
++  font-size: 13px;
++}
++.signal-row b {
++  color: var(--accent);
++  font: 700 11px monospace;
++}
++.signal-row span { color: #c6ced6; }
++.signal-code {
++  margin-top: 22px;
++  padding: 14px;
++  background: #090c0f;
++  border: 1px solid #202830;
++  color: #aeb8c2;
++  font: 600 11px monospace;
++}
++.cursor {
++  display: inline-block;
++  width: 7px;
++  height: 14px;
++  background: var(--accent);
++  margin-left: 6px;
++  vertical-align: -2px;
++  animation: blink 1s steps(1) infinite;
++}
++@keyframes blink { 50% { opacity: 0; } }
++
++.metrics {
++  display: grid;
++  grid-template-columns: repeat(4, 1fr);
++  border: 1px solid var(--line);
++  background: rgba(17, 21, 26, 0.65);
++  margin-bottom: 40px;
++}
++.metrics div {
++  padding: 26px;
++  border-right: 1px solid var(--line);
++}
++.metrics div:last-child { border-right: 0; }
++.metrics strong {
++  display: block;
++  font-size: 34px;
++  letter-spacing: -0.04em;
++  color: var(--accent);
++}
++.metrics span { font-size: 12px; color: var(--muted); }
++
++.section {
++  padding: 100px 0;
++  border-top: 1px solid var(--line);
++}
++.section-head { margin-bottom: 48px; }
++.section-label { margin-bottom: 22px; }
++h2 {
++  font-size: clamp(38px, 5.5vw, 68px);
++  line-height: 0.98;
++  letter-spacing: -0.055em;
++  margin: 0;
++}
++
++.stack-grid {
++  display: grid;
++  grid-template-columns: repeat(2, 1fr);
++  border-top: 1px solid var(--line);
++  border-left: 1px solid var(--line);
++}
++.stack-card {
++  min-height: 300px;
++  padding: 28px;
++  border-right: 1px solid var(--line);
++  border-bottom: 1px solid var(--line);
++  display: flex;
++  flex-direction: column;
++  background: linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent);
++  transition: 0.2s;
++}
++.stack-card:hover {
++  background: #11161b;
++  transform: translateY(-2px);
++}
++.stack-card.accent {
++  background: linear-gradient(135deg, #172315, #101419);
++}
++.stack-no {
++  font: 700 11px monospace;
++  color: var(--accent);
++}
++.stack-card h3 {
++  font-size: 26px;
++  line-height: 1.05;
++  letter-spacing: -0.035em;
++  margin: 32px 0 18px;
++}
++.stack-card p {
++  font-size: 14px;
++  color: #aeb8c2;
++  margin: 16px 0 20px;
++}
++.stack-card small {
++  margin-top: auto;
++  font: 700 10px / 1.5 monospace;
++  color: var(--accent);
++}
++.chips { display: flex; flex-wrap: wrap; gap: 7px; }
++.chips span {
++  font: 700 10px monospace;
++  padding: 6px 9px;
++  border: 1px solid #303943;
++  color: #d3dbe2;
++  background: rgba(255, 255, 255, 0.01);
++}
++
++.experience-layout {
++  display: grid;
++  grid-template-columns: 0.8fr 1.2fr;
++  gap: 80px;
++}
++.experience-title p {
++  color: var(--muted);
++  font-size: 16px;
++  max-width: 420px;
++}
++.role {
++  padding: 0 0 36px;
++  margin-bottom: 32px;
++  border-bottom: 1px solid var(--line);
++}
++.role:last-child { margin-bottom: 0; }
++.role-meta {
++  display: flex;
++  justify-content: space-between;
++  gap: 20px;
++  font: 700 11px monospace;
++  color: var(--muted);
++}
++.role-meta b { color: var(--accent); }
++.role h3 { font-size: 24px; margin: 16px 0; }
++.role ul {
++  margin: 0;
++  padding-left: 20px;
++  color: #b4bec7;
++}
++.role li { margin: 10px 0; }
++.role.compact p {
++  color: #aeb8c2;
++  margin: 0;
++}
++
++.case-grid {
++  display: grid;
++  grid-template-columns: repeat(2, 1fr);
++  gap: 16px;
++}
++.case-card {
++  min-height: 320px;
++  background: var(--panel);
++  border: 1px solid var(--line);
++  padding: 28px;
++  display: flex;
++  flex-direction: column;
++}
++.case-card.feature {
++  background: linear-gradient(135deg, #172315, #101419);
++  border-color: #35472c;
++}
++.case-kicker {
++  font: 700 10px monospace;
++  color: var(--accent);
++  letter-spacing: 0.08em;
++}
++.case-card h3 {
++  font-size: 28px;
++  line-height: 1.05;
++  letter-spacing: -0.04em;
++  margin: 48px 0 14px;
++}
++.case-card p {
++  font-size: 14px;
++  color: #aeb8c2;
++  margin: 0 0 14px;
++}
++.case-card .case-problem { color: #d7dee4; }
++.case-card .chips {
++  margin-top: auto;
++  padding-top: 18px;
++}
++
++.code-head {
++  display: grid;
++  grid-template-columns: 1.1fr 0.9fr;
++  gap: 60px;
++  align-items: end;
++}
++.code-head > p {
++  color: var(--muted);
++  font-size: 16px;
++  margin: 0 0 8px;
++}
++.repo-grid {
++  display: grid;
++  grid-template-columns: repeat(3, 1fr);
++  gap: 14px;
++}
++.repo-card {
++  min-height: 290px;
++  padding: 24px;
++  background: var(--panel);
++  border: 1px solid var(--line);
++  display: flex;
++  flex-direction: column;
++  transition: 0.22s;
++}
++.repo-card:hover {
++  transform: translateY(-4px);
++  border-color: #44523b;
++  background: #121813;
++}
++.repo-meta {
++  display: flex;
++  justify-content: space-between;
++  font: 700 10px monospace;
++  color: var(--accent);
++}
++.repo-meta i {
++  font-style: normal;
++  color: #dbe2e8;
++}
++.repo-card h3 {
++  font-size: 22px;
++  line-height: 1.08;
++  letter-spacing: -0.035em;
++  margin: 44px 0 12px;
++}
++.repo-card p {
++  font-size: 14px;
++  color: var(--muted);
++  margin: 0 0 18px;
++}
++.repo-card .chips { margin-top: auto; }
++.all-repos {
++  display: inline-block;
++  margin-top: 28px;
++  color: var(--accent);
++  font-weight: 800;
++  border-bottom: 1px solid rgba(156, 255, 87, 0.35);
++}
++
++.defense-grid {
++  display: grid;
++  grid-template-columns: 1fr 1fr;
++  gap: 70px;
++}
++.defense-grid > div:first-child p {
++  font-size: 16px;
++  color: var(--muted);
++  max-width: 520px;
++}
++.defense-list { border-top: 1px solid var(--line); }
++.defense-list div {
++  padding: 22px 0;
++  border-bottom: 1px solid var(--line);
++}
++.defense-list b {
++  display: block;
++  font-size: 18px;
++  margin-bottom: 5px;
++}
++.defense-list span {
++  font: 600 11px monospace;
++  color: var(--muted);
++}
++
++.contact-box {
++  padding: 54px;
++  background: var(--accent);
++  color: #071006;
++  display: grid;
++  grid-template-columns: 1.35fr 0.65fr;
++  gap: 50px;
++  align-items: end;
++}
++.contact-box h2 { margin-top: 20px; }
++.contact-links {
++  display: flex;
++  flex-direction: column;
++  gap: 12px;
++  align-items: flex-start;
++}
++.contact-links a {
++  font-weight: 900;
++  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
++}
++.contact-links span { color: #29421f; }
++
++footer {
++  min-height: 110px;
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  font: 600 11px monospace;
++  color: #68747e;
++}
++
++.reveal {
++  opacity: 0;
++  transform: translateY(18px);
++  transition: opacity 0.7s ease, transform 0.7s ease;
++}
++.reveal.visible {
++  opacity: 1;
++  transform: none;
++}
++
++@media (max-width: 980px) {
++  .nav-links { display: none; }
++  .hero { grid-template-columns: 1fr; min-height: auto; }
++  .signal-card { max-width: 680px; }
++  .metrics { grid-template-columns: repeat(2, 1fr); }
++  .metrics div:nth-child(2) { border-right: 0; }
++  .metrics div:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
++  .experience-layout,
++  .code-head,
++  .defense-grid { grid-template-columns: 1fr; gap: 40px; }
++  .repo-grid { grid-template-columns: repeat(2, 1fr); }
++}
++
++@media (max-width: 700px) {
++  .container { width: min(100% - 26px, 1180px); }
++  .hero { padding: 60px 0; }
++  .hero h1 { font-size: 48px; }
++  .hero-text { font-size: 17px; }
++  .metrics { grid-template-columns: 1fr; }
++  .metrics div {
++    border-right: 0 !important;
++    border-bottom: 1px solid var(--line);
++  }
++  .metrics div:last-child { border-bottom: 0; }
++  .stack-grid,
++  .case-grid,
++  .repo-grid { grid-template-columns: 1fr; }
++  .section { padding: 76px 0; }
++  .contact-box {
++    grid-template-columns: 1fr;
++    padding: 30px;
++  }
++  .nav-github { display: none; }
++  footer {
++    flex-direction: column;
++    justify-content: center;
++    align-items: flex-start;
++    gap: 6px;
++  }
++}
+-- 
+2.43.0
+
